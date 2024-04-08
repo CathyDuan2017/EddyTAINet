@@ -15,7 +15,7 @@ import matplotlib as mpl
 import os
 from matplotlib.path import Path
 import netCDF4 as nc
-from tool_duan import date_from_days_since_1950,date_getStartIndex,date_getEndIndex
+from tool_duan import date_from_days_since_1950,date_getStartIndex,date_getEndIndex,getNDval,getRadInfo
 import math
 import json
 from math import cos,pi,sqrt
@@ -77,12 +77,9 @@ for pathitem in os.listdir(ArgoPathHeader): # loop files in folder per month
                 rad=oneEddy['x5_eddy_radius']/1000
                 c_lon=oneEddy['x3_argo_lon']
                 c_lat=oneEddy['x4_argo_lat']
-                rad_lat=rad/111
-                rad_lon=rad/(111*cos(c_lat*pi/180))
+                rad_lat,rad_lon=getRadInfo(rad,c_lat)
                 if lon_argo>c_lon-rad_lon and lon_argo<c_lon+rad_lon and lat_argo>c_lat-rad_lat and lat_argo<c_lat+rad_lat:
-                    deltaxlon=(lon_argo-c_lon)*111*cos(lat_argo*pi/180)
-                    deltaylat=(lat_argo-c_lat)*111
-                    ndval=round(sqrt((deltaxlon**2) +(deltaylat**2))/rad, 3)
+                    ndval=getNDval(lon_argo,lat_argo,c_lon,c_lat)                    
                     if ndval<=1:                      
                         oneargo['x3_argo_lon']=c_lon
                         oneargo['x4_argo_lat']=c_lat
