@@ -73,10 +73,10 @@ class MLPmodel(nn.Module):
         self.hidden2=nn.Linear(256,128)
         self.active2=nn.ReLU()
         
-        self.hidden3=nn.Linear(128,54)
+        self.hidden3=nn.Linear(128,64)
         self.active3=nn.ReLU()
         
-        self.hidden4=nn.Linear(128,54)
+        self.hidden4=nn.Linear(128,64)
         self.active4=nn.ReLU()
         
         self.hidden5=nn.Linear(54,128)
